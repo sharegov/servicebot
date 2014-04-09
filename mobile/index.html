@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>iServiceBot</title>
+        <link rel="stylesheet" type="text/css" href="stylesheets/jqtouch.css" media="screen"/>
+        <link rel="stylesheet" type="text/css" href="theme/theme.css" media="screen"/>
+        <link rel="stylesheet" type="text/css" href="stylesheets/servicebot.css" media="screen"/>
+        <script type="text/javascript" charset="utf-8" src="javascripts/require.js"></script>
+        <script type="text/javascript">
+            require({
+                baseUrl: "javascripts",
+                paths: {
+                    jquery: "https://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery"
+                },
+                priority: ["jquery"]
+            }, ["main"]);
+        </script>
+    </head>
+    <body id="jqt">
+        <div id="home">
+            <div class="toolbar">
+                <h1>iServiceBot</h1>
+            </div>
+            <h2>New Chat Session</h2>
+            <ul>
+                <li class="arrow"><a id="go-chat" href="#chat">Begin Chat</a></li>
+            </ul>
+            <h2>Past Chat Sessions</h2>
+            <ul id="past-chat-sessions">
+                <li><span class="disabled-text">No Prior Chat Sessions</span></li>
+            </ul>
+        </div>
+        <div id="chat">
+            <div class="toolbar">
+                <h1>Chat Session</h1>
+                <a class="back button" href="#">iServiceBot</a>
+                <a id="reply-button" class="button" href="#">Reply</a>
+            </div>
+            <div id="chat-content">
+                <!-- Chat content goes here. -->
+            </div>
+            <div id="hud" class="collapsed">
+                <form>
+                    <input id="chat-message" type="text"/>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

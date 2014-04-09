@@ -1,0 +1,31 @@
+body {
+	/* make the container go all the way to the bottom of the topbar */
+	padding-top: 270px;
+}
+
+ol {
+	padding-bottom: 20px;
+}
+
+footer {
+	border-top: 1px solid #eee;
+	margin-bottom: 20px;
+}
+
+footer p {
+	margin-top: 20px;
+}
+
+footer p a {
+	margin: 5px;
+}
+
+#checkList {
+	word-wrap: break-word;
+}
+
+.scroll {
+	height: 550px;
+	overflow: auto;
+	position: relative;
+}

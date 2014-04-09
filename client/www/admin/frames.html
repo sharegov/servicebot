@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" >
+<META HTTP-EQUIV="Cache-Control" CONTENT="max-age=0">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<META http-equiv="expires" content="0">
+<META HTTP-EQUIV="Expires" CONTENT="Tue, 01 Jan 1980 1:00:00 GMT">
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<style>
+td { vertical-align:top }
+
+</style>
+<script type="text/javascript" charset="utf-8" src="../javascripts/require.js"></script>
+<script type="text/javascript" charset="utf-8" src="http://sharegov.org/jslib/knockout-2.0.0.js"></script>
+<title>ServiceBot Frames</title>
+<script type='text/javascript'>
+function FrameModel(frame) {
+    var self = {};
+    self.id = frame.id;
+    self.name = ko.observable(frame.name);
+    self.transform = ko.observable(frame.transform.id);
+    self.output = ko.observable(frame.output.replace(/\\([^\\])/g, '\n$1'));    
+    self.nextFrames = ko.observableArray();
+    self.prevFrames = ko.observableArray();
+    self.rules = ko.observableArray();    
+    $.each(frame.rules, function(i,el){self.rules.push(el); });       
+    self.currentRule = ko.observable();
+    
+    self.currentRule.subscribe(function() {
+            console.log('new rule selected', self.currentRule());
+    });
+
+    self.refreshConnections = function() {
+        self.prevFrames.removeAll();
+        self.nextFrames.removeAll();
+        frameService.get('/prevFrames/' + self.id, {}, function(r) {
+            $.each(r, function(i,el) { self.prevFrames.push(el); });
+        });
+        frameService.get('/nextFrames/' + self.id, {}, function(r) {
+            $.each(r, function(i,el) { self.nextFrames.push(el); });
+            console.log('next frames refreshed', self.nextFrames());
+        });
+    };
+    
+    self.save = function() {
+        var data = ko.toJS(self);
+        data.output = data.output.replace(/\n/g, '\\')
+        console.log('saving frame', data);
+        frameService.putObject('/frame', data,function(result) {
+                if (result.ok)
+                    alert('Frame saved successfully.');
+                else {
+                    console.log('error saving ', ko.toJS(self), result);
+                    alert('Failed to save frame: ' + result.error);
+                }
+        });
+    };   
+
+    self.newRule = function() {
+        var rule = {
+                condition: "';'(true)",
+                action: "next('" + self.id + "')"
+            };
+        frameService.postObject('/rule/' + self.id, rule, function(result) {
+                console.log('post returned');
+                if (result.ok) {
+                    rule.id = result.ruleHandle;
+                    self.rules.push(rule);                    
+                    self.currentRule(rule);
+                    console.log('set curernt rule', self.currentRule());
+                }
+                else {
+                    alert('Failed to create rule: ' + result.error);
+                }
+        },
+        function(err) { console.log(err); });
+    };
+    
+    self.saveRule = function() {
+        frameService.putObject('/rule', ko.toJS(self.currentRule), function(r) {
+                if (r.ok) {
+                    alert('Rule saved successfully.');
+                    self.refreshConnections();
+                }
+                else alert('Failed to save rule: ' + r.error); 
+        },
+        function(err) { console.log(err); });        
+    };
+    
+    self.deleteRule = function() {
+        frameService.del('/rule/' + self.currentRule().id, {}, function(r) {
+                if (r.ok) {
+                    alert('Rule deleted successfully.');
+                    self.rules.remove(self.currentRule());
+                    self.currentRule(undefined);
+                    if (self.rules.length > 0)
+                        self.currentRule(self.rules()[0]);                    
+                    self.refreshConnections();
+                }
+                else 
+                    alert('Failed to delete rule: ' + r.error); 
+        },
+        function(err) { console.log(err); });        
+    };
+    
+    self.checkCondition = function() {
+        frameService.postObject('/validateProlog', {text:self.currentRule().condition}, function(r) {
+                if (r.ok) alert('Expression is valid.');
+                else alert('Expression is not valid: ' + r.error); 
+        },
+        function(err) { console.log(err); });                
+    };
+    
+    self.checkAction = function() {
+        frameService.postObject('/validateProlog', {text:self.currentRule().action}, function(r) {
+                if (r.ok) alert('Expression is valid.');
+                else alert('Expression is not valid: ' + r.error); 
+        },
+        function(err) { console.log(err); });                
+    };
+    
+    return self;
+}
+function FramesAdminModel() {
+    var self = {};
+    self.frameContext = ko.observable();
+    self.contextList = ko.observableArray();
+    self.searchFilter = ko.observable();
+    self.frames = ko.observableArray();
+    self.currentFrame = ko.observable();
+    self.transforms = ko.observableArray();
+    self.filterFrames = function() {
+        console.log('filter frames: ' , self.searchFilter());
+    };  
+    
+    self.newContext = function() {
+        var name = prompt('Enter context name:');
+        if (!name) { alert('No name specified.'); return; }
+        frameService.postObject('/context', {name:name}, function (r) {
+            if (r.ok) {
+                alert('Context created successfully.');
+                self.contextList.push(r.data);
+            }
+            else 
+                alert('Could not create new frame: ' + r.error);
+        }, function(e) { console.log(e); });        
+    };
+    
+    self.deleteContext = function() {
+        var ctx = self.frameContext();
+        if (!ctx) {
+            alert('No context selected.');
+            return;
+        }
+        //console.log('delete context ', ctx);
+        frameService.del("/context/" + ctx.hghandle, {}, function(r) {
+          if (r.ok) {
+            alert('Context ' + ctx.name + ' delete successfully.');
+            self.contextList.remove(ctx);
+          }
+          else alert('Failed to delete context:' + r.error);
+        });
+    };
+    
+    self.frameContext.subscribe(function() {
+        if (self.frameContext()) {
+            frameService.get('/all?context=' + self.frameContext().name, {}, function(data) {
+                self.frames.removeAll();
+                $.each(data, function(i,el) { 
+                  self.frames.push(new FrameModel(el)); 
+                });
+                if (self.currentFrame())
+                    self.currentFrame().refreshConnections();
+            });            
+        }
+    });
+    
+    self.currentFrame.subscribe(function() {
+        if (self.currentFrame())
+            self.currentFrame().refreshConnections();
+    });
+
+    self.goToFrame = function(x) {
+        console.log('goToFrame', x);
+        var A = $.grep(self.frames(), function(el) {
+                return x.id == el.id;
+        });
+        if (A.length > 0)
+            self.currentFrame(A[0]);
+    };
+    
+    self.deleteCurrentFrame = function () {
+        console.log('deleting frame', ko.toJS(self.curentFrame));
+        frameService.del('/frame/' + self.currentFrame().id, {}, function(result) {
+                if (result.ok) {
+                    self.frames.remove(self.currentFrame());    
+                    if (self.frames.length == 0)
+                        self.currentFrame(null);
+                    alert('Frame deleted successfully.');
+                }
+                else {
+                    console.log('error deleting ', ko.toJS(self), result);
+                    alert('Failed to delete frame: ' + result.error);
+                }
+        });
+    }; 
+    
+    self.newFrame = function() {
+        frameService.post('/frame/new?context='+self.frameContext().name, {}, function (r) {
+            if (r.ok) {
+                var m = new FrameModel(r.frame);
+                self.frames.push(m);
+                self.currentFrame(m);
+            }
+            else alert('Could not create new frame: ' + r.error);
+        });
+    };
+    
+    frameService.get('/contexts/all', {}, function (r) {
+        if (!r.ok) {
+            console.log('Failed to get context list.', r.error);
+        }
+        var data = r.data;
+        console.log('contexts', data);
+        $.each(data, function(i,el) { 
+            self.contextList.push(el); 
+        });
+    });
+    /*
+    frameService.get('/all', {}, function (data) {
+        console.log('frames', data);
+        $.each(data, function(i,el) { 
+            self.frames.push(new FrameModel(el)); 
+        });
+    });
+    */
+    frameService.get('/transforms', {}, function (data) {
+        $.each(data, function (i, el) { 
+            self.transforms.push(el); 
+        });
+    });
+    return self;
+}
+
+require.config({
+     waitSeconds: 3000
+});
+require({
+        baseUrl: "../javascripts",
+        paths: {            
+            "U":    "http://sharegov.org/jslib/U",
+            "rest": "http://sharegov.org/jslib/rest"
+        },
+        priority: ["jquery"],
+        urlArgs: "cache_bust=" + (new Date()).getTime()
+    },  [ "jquery", "rest", "U"],
+    function ($, rest, U) {
+        frameService = new rest.Client("/iframes", {async:true});
+        var model = new FramesAdminModel();
+        ko.applyBindings(model, $('#framesAdmin')[0]);
+    }
+);
+
+</script>        
+</head>
+<body>
+
+<div id='framesAdmin'>
+<table><tr><td>
+<div id='divFrameList'>
+<b>Frame Context (<a href='#' data-bind='click:newContext'>new</a>)</b>:
+<select data-bind="options:contextList, optionsText:'name', value:frameContext"></select>
+<a href='#' data-bind='click:deleteContext'>del</a>
+<br>
+<button type="button" data-bind="click:newFrame">Create New Frame</button>
+<br>
+Search:<input type="text" data-bind="value:searchFilter"> 
+<button type="button" data-bind="click:filterFrames">Go</button><br>
+<select data-bind="options:frames,optionsText:'name', value:currentFrame"></select>
+</div>
+</td><td>
+<div id='currentFrame' data-bind="with:currentFrame">
+<button type="button" data-bind="click:save">Save</button>
+<button type="button" data-bind="click:$parent.deleteCurrentFrame">Delete</button>
+<br>
+<b>Frame <input size="60" data-bind='value:name'></b><br>
+<b>&nbsp;&nbsp;&nbsp;&nbsp;id:</b><span data-bind="text:id"></span><br>
+<table>
+<tr><td>
+Input Transform:</td>
+<td>
+<select data-bind="options:$parent.transforms,optionsText:'name',optionsValue:'id',value:transform"></select>
+</td>
+</tr>
+<tr><td>
+Output:
+</td><td>
+<textarea rows="10" cols="60" data-bind="value:output"></textarea>
+</td></tr>
+<tr><td>Subsequent Frames:</td>
+<td data-bind="foreach:nextFrames">
+<a href="#" data-bind="click:$root.goToFrame, text:name"></a>
+</td></tr>
+<tr><td>Prior Frames:</td>
+<td  data-bind="foreach:prevFrames">
+<a href="#" data-bind="click:$root.goToFrame, text:name"></a>
+</td></tr>
+<tr><td>
+Rules:<br>
+<button type="button" data-bind="click:newRule">New Rule</button>
+<select data-bind="options:rules,optionsText:'id',value:currentRule"></select><br>
+<hr>
+<button type="button" data-bind="click:saveRule">Save Current</button>
+<button type="button" data-bind="click:deleteRule">Delete Current</button>
+</td><td data-bind="with:currentRule">
+Condition:<button type="button" data-bind="click:$parent.checkCondition">Validate</button><br>
+<textarea rows="10" cols="60" data-bind="value: condition"></textarea><br>
+Action:<button type="button" data-bind="click:$parent.checkAction">Validate</button><br>
+<textarea rows="10" cols="60" data-bind="value: action"></textarea>
+</td></tr>
+</table>
+</div>
+</td></tr></table>
+</div>
+</body>
+</html>

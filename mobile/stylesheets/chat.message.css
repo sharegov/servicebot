@@ -1,0 +1,8 @@
+@charset "utf-8";
+
+#chat-message-form > #chat-message-input {
+    height: 100%;
+    padding: 5px;
+    resize: none;
+    width: 100%;
+}

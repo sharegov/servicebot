@@ -1,0 +1,10 @@
+{
+    "workingDir":"c:/work/servicebot",
+    "port":8222,
+    "defaultContext":"Economic Development",
+    "diskoHome": "c:/work/disko",
+    "linkgrammarServer": "localhost",
+    "openfireHost" : "olsportaldev",
+    "openfireAdminPassword" : "admin",
+    "gisService" : "http://s0141668:9193/mdc/mdcgis-0.1"
+}

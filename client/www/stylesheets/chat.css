@@ -1,0 +1,46 @@
+@charset "utf-8";
+@import url(chat.members.css);
+@import url(chat.message.css);
+@import url(chat.window.css);
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 1em;
+    font-weight: 300;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.hidden {
+    display: none;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.ui-layout-north {
+    overflow: hidden;
+}
+
+.ui-layout-resizer {
+    background: #eee;
+}
+
+.ui-layout-resizer-drag .ui-layout-toggler {
+    display: none;
+}
+
+.ui-layout-toggler {
+    background: #aaa;
+}
+
+.ui-layout-toggler:hover {
+    background: #0f0;
+}

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Miami-Dade County - Toolbar</title>
+    
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+
+    <script src="javascripts/jquery.js" type="text/javascript"></script>
+    <script src="http://www.miamidade.gov/global_assets/templates_v6/js/persist-min.js" type="text/javascript"></script>
+
+    <style>
+      /* ------------------------- FLOATING BAR --------- */
+      #floatingBar {
+        position:fixed;
+        bottom:0;
+        left:0;
+        width:100%;
+        height:44px;
+        overflow:hidden;
+        z-index:100;
+      }
+       
+      #fbInside {
+        margin:0 auto;
+        width:93%;
+        height:44px;
+        background-image:url(http://miamidade.gov/wps/themes/html/Portal4/colors/default/blueBar.png);
+        background-repeat:repeat-x;
+      }
+      
+      #fbMiddle {
+        height:44px;
+        line-height:44px;
+        width:100%;
+        margin:0;
+        padding:0;
+        float:left;
+      }
+      
+      #fbMiddle ul {
+        margin:3px 0 0 0;
+        padding:0;
+        list-style-type:none;
+      }
+      
+      #fbMiddle ul li {
+        display:block;
+        float:left;
+        line-height:38px;
+        margin-right:10px;
+        padding-right:10px;
+        border-right:1px solid #2c679b;
+        font-size:11px;
+        color:#fff;
+      }
+      
+      #fbMiddle ul li img {vertical-align:middle;}
+      
+      #fbMiddle ul li a {
+        text-decoration:none;
+      }
+      
+      .socialM_icons a {
+      	width: 36px;
+        height: 32px;
+        float: left;
+      }
+      
+      #fbMiddle ul li a:visited {
+        text-decoration:none;
+      }
+      
+      .socialM_icons img {
+        padding:0 4px 0 0;
+      }
+      
+      .printEmailShare_icons {}
+      .googleTranslationBox {}
+      .feedback_icon {
+      	color:#fff;
+      	width:90px;
+      }
+      .feedback_icon a,.feedback_icon a:visited{color:#fff;}
+      
+      #floatingBarOpen {
+        position:fixed;
+        bottom:0;
+        left:0;
+        width:100%;
+        height:36px;
+        overflow:hidden;
+        display:none;
+      }
+      
+      #fbInsideOpen {
+        margin:0;
+        float:right;
+        margin-right:3%;
+        width:80px;
+        background-image:url(http://miamidade.gov/wps/themes/html/Portal4/colors/default/blueBarMax.png);
+        background-repeat:no-repeat;
+        height:36px;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <h1>Toolbar</h1>
+
+    <!-- bottom bar --> 
+    <div id="floatingBar">
+    <div id="fbInside">
+    <img src="http://miamidade.gov/wps/themes/html/Portal4/colors/default/blueLeft.png" width="21" height="44" alt="Corner" style="float:left;margin-left:-21px" />
+    <div id="fbMiddle">
+    <script><!--
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+    //-->
+    </script>
+    <script src="http://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style type="text/css">iframe.goog-te-banner-frame { display:none !important; }</style>
+    <style type="text/css">body {position: static !important; top: 0 !important;}</style>
+    
+    <ul>
+    <!-- google translator -->
+    <li id="google_translate_element" class="googleTranslationBox"     style="height:28px;line-height:18px;padding-bottom:2px;padding-top:8px;padding-left:5px;"></li>
+    <!-- social media icons -->
+    
+    <li class="socialM_icons">
+    <a href="http://www.facebook.com/miami.dade.county"     target="_blank"><img src="http://miamidade.gov/wps/themes/html/Portal4/colors/default/facebook_32.png"     alt="Facebook" border="0" align="absmiddle"></a>
+    <a href="http://twitter.com/MiamiDadeCounty"     target="_blank"><img src="http://miamidade.gov/wps/themes/html/Portal4/colors/default/twitter_32.png"     alt="Twitter" border="0" align="absmiddle"></a>
+    <a href="http://www.youtube.com/user/MiamiDadeTV"     target="_blank"><img src="http://miamidade.gov/wps/themes/html/Portal4/colors/default/youtube_32.png"     alt="YouTube" border="0" align="absmiddle"></a>
+    <a href="http://feeds2.feedburner.com/miami-dade-county-headline-news"     target="_blank"><img src="http://miamidade.gov/wps/themes/html/Portal4/colors/default/rss_32.png"     alt="RSS" border="0" align="absmiddle"</a>
+    </li>
+    
+    <!-- print / email / share -->
+    <li class="printEmailShare_icons">
+    
+    <!-- AddThis Button BEGIN -->
+    		<script type="text/javascript">
+    			var addthis_pub="portaladmin"; 
+    			var addthis_options = 'facebook, myspace, twitter, google, live, aim, more'; 
+    			var addthis_exclude = 'digg, email, print';
+    		</script>
+             
+            <script type="text/javascript">
+    		$('#shareButton').click(function(e){return false})
+    		</script> 
+    
+    <a href="#" id="shareButton" class="exception" onclick="return     addthis_open(this, '', '[URL]', '[TITLE]')"     onmouseout="addthis_close()" onclick="return     addthis_sendto()"><img src="http://miamidade.gov/wps/themes/html/Portal4/colors/default/share_button.png"     alt="Bookmark and Share" width="52" height="21"     style="border:0;margin:8px 0 0 0;"/></a>
+    <script type="text/javascript" src="http://s7.addthis.com/js/200/addthis_widget.js"></script>
+    <!-- AddThis Button END -->
+    </li>
+    
+    <!-- open / close div -->
+    <li style="float:right;">
+    <a href="#" style="color:#fff; font-weight:bold;     text-decoration:none;" id="min">Minimize Tools</a>
+    </li>
+    
+    <!-- feedback -->
+    <li class="feedback_icon" style="float:right;">
+    <img src="http://miamidade.gov/wps/themes/html/Portal4/colors/default/feedback.png"     width="27" height="26" alt="Feedback" style="padding:0 5px 5px 0" /> 
+    <a id="feedback_survey_link" href="#"     style="font-weight:bold;">Feedback</a>
+    </li> 
+    
+    </ul>
+    </div>
+    <img src="http://miamidade.gov/wps/themes/html/Portal4/colors/default/blueRight.png"     width="21" height="44" alt="Corner"     style="float:right;margin-right:-21px;" />
+    </div>
+    </div>
+    
+    <!-- open / close tab -->
+    <div id="floatingBarOpen">
+    <div id="fbInsideOpen"> 
+    <a href="#" style="color:#fff; font-weight:bold; text-decoration:none;     display:block; padding:5px; height:27px;line-height:30px;     text-align:center;" id="max">Tools</a>
+    </div>
+    </div>
+    <script>
+    $(document).ready(function()
+    {
+    	var title = document.title
+    	var link = "http://feedback.miamidade.gov/Community/se.ashx?s=57F314581DBCF72C&title=" + document.title + "&link=" + window.location.href + ""
+    	$("#feedback_survey_link").click(function()
+    	{
+    		window.open(link)
+    		return false;
+    	});
+
+      var toolBarState = new Persist.Store('Footer Toolbar');
+      toolBarState.get('minimized', function(ok, val) {
+        if(ok) {
+          if(!val || val == 'false') {
+            return false;
+          } else {
+            $("#floatingBar").slideToggle('slow', function()
+            {$("#floatingBarOpen").slideToggle('slow')});
+          }
+        }
+      });
+
+      $("#min").click(function() {
+        toolBarState.set('minimized', 'true');
+        $("#floatingBar").slideToggle('slow', function(){
+        $("#floatingBarOpen").slideToggle('slow')});   
+        return false;
+      });
+
+      $("#max").click(function() {
+        toolBarState.set('minimized', 'false');
+        $("#floatingBarOpen").slideToggle('slow', function(){
+        $("#floatingBar").slideToggle('slow')});
+        return false;
+       });
+
+    });
+    </script> 
+    <!-- end bottom bar --> 
+
+  </body>
+</html>

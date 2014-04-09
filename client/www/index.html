@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>BusinessExpress Service Bot - Miami-Dade County</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Economic Development Portal, Miami-Dade County">
+    <meta name="author" content="Miami-Dade County">
+
+    <script type="text/javascript" charset="utf-8" data-main="javascripts/main" src="javascripts/require.js"></script>
+
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link href="stylesheets/servicebot.css" rel="stylesheet">
+    
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <span class="brand"><img src="business-banner2.jpg" alt="Open for Business"></span>
+          
+          <div class="nav-collapse">
+            <ul id="user-box" class="nav pull-right">
+              <li id="create-account"><a href="http://miamidade.gov/wps/portal/Main/members" target="_blank">Create account</a></li>
+              <li class="divider-vertical"></li>
+              <li id="signin-box" class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sign in <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li id="invalid-login" class="alert alert-error hide">Incorrect email or password.  Please try again.</li>
+                  <li>
+                  <form id="login" style="padding: 10px">
+                  	<label><strong>Email</strong></label>
+                  	<input id="username" type="text" />
+                  	<label><strong>Password</strong></label>
+                  	<input id="password" type="password" />
+                  	<button id="sigin-btn" type="submit" class="btn btn-primary">Sign in</button>
+                  </form>
+                  </li>
+                  <li class="divider"></li>
+                  <li style="padding:2px 10px">Sign in with your miamidade.gov username and password.</li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="span7">
+          <h1 id='titleHeading' class="page-header">BizBot - Your Startup Assistant <small>Beta</small></h1>
+          <div class="well scroll" id="chatWell">
+            <table class="table table-striped">
+              <tbody id="chatWindow"></tbody>
+            </table>
+            <p id="loading"><span class="label label-default">loading...</span></p>
+          </div>
+        </div>
+        
+        <div class="span5">
+          <h1 class="page-header">Checklist</h1>
+          <div class="well">
+          	<p id="checklistTitle">Your guide to opening a new business.</p>
+            <ol id="checkList"></ol>
+            <p>
+              <button id="checklistSave" disabled="disabled" class="btn btn-primary hide" data-loading-text="Saving...">Save</button>
+            </p>
+            <div id="alertBox"></div>
+          </div>
+          <div id="feedback">
+      		<a class="btn btn-primary btn-large" href="http://feedback.miamidade.gov/Community/se.ashx?s=57F3145835E2C2A1" target="_blank"><i class="icon-comment icon-white"></i> Feedback</a>
+          </div>
+          <div id="myChecklists" class="hide">
+          	<h2 class="page-header">My Checklists</h2>
+          	<div class="accordion" id="accordion"></div>
+          </div>
+          
+          <!-- Accordion template -->
+          <div id="message-template" class="accordion-group hide">
+              <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href=""></a>
+              </div>
+              <div id="" class="accordion-body collapse">
+                <div class="accordion-inner">
+                  <ol style="padding-bottom: 0px; word-wrap: break-word;"></ol>
+                </div>
+              </div>
+	       </div>
+           
+          <!-- Modal -->
+          <div id="myModal" class="modal hide fade">
+            <div class="modal-header">
+              <button class="close" data-dismiss="modal">x</button>
+              <h3>BizBot</h3>
+            </div>
+            <div class="modal-body">
+              <p>Hello, I’m your personal business startup assistant. I’m new, and currently in &ldquo;beta&rdquo;, 
+              which means I could really use some feedback to help me deliver better information in the future. 
+              Please make sure to click the feedback button, once we’re done with our chat.</p>
+              <p>To start, please enter a nickname.</p>
+              <input type="text" id="nickname" class="input-xlarge" maxlength="14" placeholder="Nickname" />
+            </div>
+            <div class="modal-footer">
+              <a href="#" id="connectButton" class="btn btn-primary" data-dismiss="modal">Connect</a>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <footer>
+      	<p><img src="mdc-logo.png" width="118" height="55" alt="Miami-Dade County Logo" style="padding-right: 15px; margin-top: 30px;"></p>
+      	<p>
+      		<!-- Social Media -->
+      		<a href="http://www.facebook.com/miami.dade.county" target="_blank"><img src="img/toolbar/facebook_32.png" alt="Facebook" border="0" align="absmiddle"></a>
+			<a href="http://twitter.com/MiamiDadeCounty" target="_blank"><img src="img/toolbar/twitter_32.png" alt="Twitter" border="0" align="absmiddle"></a>
+			<a href="http://www.youtube.com/user/MiamiDadeTV" target="_blank"><img src="img/toolbar/youtube_32.png" alt="YouTube" border="0" align="absmiddle"></a>
+			<a href="http://feeds2.feedburner.com/miami-dade-county-headline-news" target="_blank"><img src="img/toolbar/rss_32.png" alt="RSS" border="0" align="absmiddle"></a>
+      		<!-- Email, Print -->
+      		<a href="http://www.miamidade.gov/global_assets/sendEmail.asp" target="_blank"><i class="icon-envelope"></i> Email Page</a>
+      		<a href="#" onclick="window.print(); return false;"><i class="icon-print"></i> Print</a>
+      	</p>
+      	<p><strong>Funded by:</strong> Economic Development Administration (EDA), Department of Commerce</p>
+      </footer>
+      
+    </div> <!-- /container -->
+  </body>
+</html>

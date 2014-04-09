@@ -1,0 +1,60 @@
+/*
+ * servicebot.css
+ *
+ * Copyright (c) 2011 Miami-Dade County. All rights reserved.
+ */
+@charset "utf-8";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+#hud {
+    background: rgba(34, 34, 34, 0.7);
+    margin: 1em;
+    padding: 20px;
+    position: fixed;
+    -webkit-border-radius: 30px / 30px;
+}
+
+#hud input[type="text"] {
+    background: transparent;
+    border: 0;
+    color: #cccccc;
+    font: normal 17px "Helvetica Neue", Helvetica;
+    display: inline-block;
+    margin: 0 auto;
+    width: 100%;
+    -webkit-appearance: textarea;
+}
+
+.chat-bubble {
+    color: #333;
+    margin: 1em;
+    padding: 15px;
+    position: relative;
+    -webkit-border-radius: 20px / 20px;
+}
+
+.chat-bubble.left {
+    background: #f8f8f8;
+    background: -webkit-gradient(linear, 0 100%, 0 0, from(#d8d8d8), to(#f8f8f8));
+    border: 1px solid #737375;
+    margin-right: 50px;
+}
+
+.chat-bubble.right {
+    background: #b9e4ff;
+    background: -webkit-gradient(linear, 0 100%, 0 0, from(#79adff), to(#b9e4ff));
+    border: 1px solid #425282;
+    margin-left: 50px;
+}
+
+.collapsed {
+    display: none;
+}
+
+.disabled-text {
+    color: #c9c9c9;
+}

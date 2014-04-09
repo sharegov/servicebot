@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+#chat-members > .ui-layout-north {
+    background-color: #36f;
+    border: .5em solid #36f;
+    text-align: center;
+}
+
+#chat-members > .ui-layout-north > strong {
+    color: #fff;
+    font-weight: bold;
+    margin-top: 5px;
+    vertical-align: middle;
+}
+
+#chat-members > .ui-layout-center > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 5px;
+}
+
+#chat-members > .ui-layout-center > ul > li {
+    cursor: pointer;
+    margin-bottom: 5px;
+    text-overflow: ellipsis;
+}
+
+#chat-members > .ui-layout-south > #chat-disconnect {
+    height: 100%;
+    width: 100%;
+}
+
+#chat-members > .ui-layout-resizer-south {
+    background-color: transparent;
+}

@@ -1,0 +1,118 @@
+/*!
+ * Toolbar
+ *
+ * Copyright 2012 Miami-Dade County
+ */
+#floatingBar {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 44px;
+	overflow: hidden;
+	z-index: 100;
+}
+
+#fbInside {
+	margin: 0 auto;
+	width: 93%;
+	height: 44px;
+	background-image:
+		url(../img/toolbar/blueBar.png);
+	background-repeat: repeat-x;
+}
+
+#fbMiddle {
+	height: 44px;
+	line-height: 44px;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	float: left;
+}
+
+#fbMiddle ul {
+	margin: 3px 0 0 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+#fbMiddle span {
+	display: block;
+	float: left;
+	line-height: 38px;
+	margin-right: 10px;
+	padding-right: 10px;
+	border-right: 1px solid #2c679b;
+	font-size: 11px;
+	color: #fff;
+}
+
+#fbMiddle div {
+	display: block;
+	float: left;
+	line-height: 38px;
+	margin-right: 10px;
+	padding-right: 10px;
+	border-right: 1px solid #2c679b;
+	font-size: 11px;
+	color: #fff;
+}
+
+#fbMiddle ul li img {
+	vertical-align: middle;
+}
+
+#fbMiddle ul li a {
+	text-decoration: none;
+}
+
+#fbMiddle ul li a:visited {
+	text-decoration: none;
+}
+
+.socialM_icons img {
+	padding: 0 4px 0 0;
+}
+
+.printEmailShare_icons {
+	
+}
+
+.googleTranslationBox {
+
+}
+
+.feedback_icon {
+	color: #fff;
+}
+
+.feedback_icon a,.feedback_icon a:visited {
+	color: #fff;
+}
+
+#floatingBarOpen {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 36px;
+	overflow: hidden;
+	display: none;
+}
+
+#fbInsideOpen {
+	margin: 0;
+	float: right;
+	margin-right: 3%;
+	width: 80px;
+	background-image:
+		url(../img/toolbar/blueBarMax.png);
+	background-repeat: no-repeat;
+	height: 36px;
+}
+
+.toolbarContainer {
+	margin-left: auto;
+	margin-right: auto;
+}
